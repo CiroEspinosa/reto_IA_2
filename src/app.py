@@ -1,12 +1,13 @@
-import openai
+from openai import OpenAI
 import streamlit as st
 
 
-
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-openai.api_base_url = "https://acc-alejandria-core-openaimagesound-pro.openai.azure.com"
-openai.api_version = "2023-07-01-preview"
-openai.api_type = "azure"
+client = OpenAI(
+  api_key=st.secrets["OPENAI_API_KEY"], 
+  api_base_url = "https://acc-alejandria-core-openaimagesound-pro.openai.azure.com",
+  api_version = "2023-07-01-preview",
+  api_type = "azure",
+)
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
 GPT_EMBEDDING_ENGINE = 'mondongodb'
@@ -29,12 +30,12 @@ if user_input := st.chat_input():
   st.session_state["messages"].append({"role": "user", "content": user_input})
   st.chat_message("user").write(user_input)
 
-  response = openai.ChatCompletion.create(
+  response = client.completions.create(
         model=GPT_MODEL,
         messages=st.session_state["messages"],
         engine=GPT_CHAT_ENGINE
     )
   
-  responseMessage = response['choices'][0]['message']['content']
+  responseMessage = response.choices[0].message.content
   st.session_state["messages"].append({"role": "assistant", "content": responseMessage})
   st.chat_message("assistant").write(responseMessage)
