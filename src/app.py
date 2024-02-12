@@ -3,10 +3,7 @@ import streamlit as st
 
 
 client = OpenAI(
-  api_key=st.secrets["OPENAI_API_KEY"], 
-  api_base_url = "https://acc-alejandria-core-openaimagesound-pro.openai.azure.com",
-  api_version = "2023-07-01-preview",
-  api_type = "azure",
+
 )
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
