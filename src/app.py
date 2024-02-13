@@ -29,8 +29,7 @@ if user_input := st.chat_input():
 
   response = client.completions.create(
         model=GPT_MODEL,
-        messages=st.session_state["messages"],
-        engine=GPT_CHAT_ENGINE
+        prompt=st.session_state["messages"]
     )
   
   responseMessage = response.choices[0].message.content
